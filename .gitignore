@@ -23,4 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 doc/.vitepress/cache
-.vitepress/dist
