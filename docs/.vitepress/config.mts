@@ -9,8 +9,6 @@
 import { mergeConfig, type UserConfig } from "vitepress";
 import {defaultConfig , defineConfig } from "../../src/config/index";
 const userConfig: UserConfig = {
-    base: "/repo/",
-    srcDir: ".",
     themeConfig: {
         author: "Ruby",
         user: {
