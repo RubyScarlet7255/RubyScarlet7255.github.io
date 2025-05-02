@@ -43,7 +43,7 @@ const userConfig: UserConfig = {
             }],
           },
     },
-    base: "/repo/",
+    base: "",
 }
 mergeConfig(userConfig, defaultConfig);
 export default defineConfig(userConfig);
