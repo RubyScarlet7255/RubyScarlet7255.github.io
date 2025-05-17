@@ -400,7 +400,7 @@ var defaultConfig = {
       }
     }
   },
-  markdown: {},
+  // markdown: {},
   themeConfig: {
     pageLoading: true,
     themeLoading: true,

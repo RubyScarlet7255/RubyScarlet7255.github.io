@@ -1,4 +1,9 @@
 ---
+head:
+  - - link
+    - rel: stylesheet
+      href: https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css
+
 title: 本站介绍
 date: 2025-02-04 17:00:00
 categories: 随笔
@@ -6,7 +11,7 @@ cover: [/pics/first_post/cover.jpg]
 sticky: 3
 ---
 
-![封面测试图](/pics/first_post/cover.jpg)
+![封面](/pics/first_post/cover.jpg)
 
 <!--more-->
 

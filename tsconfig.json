@@ -13,7 +13,10 @@
 		"moduleResolution": "Node",
 		"jsx": "preserve",
 		"lib": ["ESNext", "DOM", "DOM.Iterable"],
-		"types": ["vite/client"]
+		"types": ["vite/client"],
+		"paths": {
+			"@src": ["./src"],
+		}
 	},
-	"include": ["src/**/*.ts","src/**/*.json","src/**/*.vue","src/**/*.js","src/**/*.jsx","src/**/*.tsx", "doc/**/*.ts"]
+	"include": ["src/**/*.ts","src/**/*.json","src/**/*.vue","src/**/*.js","src/**/*.jsx","src/**/*.tsx", "doc/**/*.ts", "docs/.vitepress/components/imgSlides.vue"]
 }
