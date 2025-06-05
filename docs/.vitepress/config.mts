@@ -101,6 +101,11 @@ const customElements = [
 const userConfig: UserConfig = {
     themeConfig: {
         author: "Ruby",
+        	page: {
+          archives: '/archives',
+          categories: '/categories',
+          tags: '/tags',
+        },
         user: {
             name: "Ruby",
             firstName: "Ruby",
@@ -132,6 +137,16 @@ const userConfig: UserConfig = {
               icon: "<img src=\"./pics/social/github.png\" height=\"30px\"/ width=\"30px\"></svg>",
             }],
           },
+      topBars: [ 
+			{ title: '主页', url: '/' }, 
+			{ title: '归档', url: '/archives' }, 
+      { title: "分类",
+        children: [
+          {title: "categories", url: '/categories'},
+          {title: "tags", url: '/tags'},
+        ]
+      }
+		] 
     },
     base: "/",
     vite: {
@@ -155,7 +170,7 @@ const userConfig: UserConfig = {
           isCustomElement: (tag) => customElements.includes(tag)
         }
       }
-    }
+    },
 }
 mergeConfig(userConfig, defaultConfig);
 export default defineConfig(userConfig);

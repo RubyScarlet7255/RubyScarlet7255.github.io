@@ -9,6 +9,7 @@ date: 2025-05-17 15:00:00
 categories: 机器学习
 cover: [/pics/machine_learning/perceptron/cover.jpg]
 sticky: 0
+tags: ["机器学习","AI"]
 ---
 ![封面](/pics/machine_learning/perceptron/cover.jpg)
 
