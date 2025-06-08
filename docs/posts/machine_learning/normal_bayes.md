@@ -20,6 +20,8 @@ tags: ["机器学习","AI"]
 
 &emsp;&emsp;贝叶斯分类是一种基于贝叶斯定理的分类学习方法，一句话概括其根据样本的特征计算相关的后验概率，然后根据后验概率最大的输出作为其预测标签。而朴素贝叶斯则在此基础上拥有**样本独立性假设**，这使得其使用会更加的简单，然而这并不妨碍它是个非常实用的方法。由于它的原理是学习生成数据的机制，所以它是一种生成模型。
 
+&emsp;&emsp;小提一嘴，因为小站对于latex的支持并没有太好，所以有些地方会避免使用中文，请见谅。
+
 
 ## 联合概率分布
 
@@ -34,10 +36,10 @@ $$F(x_1, x_2, ..., x_n) = P(X_1 \leq x_1, X_2 \leq x_2,..., X_n \leq x_n)$$
 
 &emsp;&emsp;举个具体的例子，想象你要预测明天是否会下雨（随机变量$X$）和是否要带伞（随机变量$Y$）。  
 - **单独概率**：  
-  - $P(X=\text{雨})$：明天下雨的概率  
-  - $P(Y=\text{带伞})$：你带伞的概率  
+  - $P(X=雨)$：明天下雨的概率  
+  - $P(Y=带伞)$：你带伞的概率  
 - **联合分布**：  
-  - $P(X=\text{雨}, Y=\text{带伞})$：**同时考虑**天气和你行为的概率
+  - $P(X=雨, Y=带伞)$：**同时考虑**天气和你行为的概率
 
 联合分布就是描述多个变量**共同发生**的概率规律,而联合分布函数，则会**描述**所有你带伞的情况下下雨的概率，和所有下雨情况下你带伞的概率。
 
@@ -82,20 +84,21 @@ $$T=\{(x_1,y_1),(x_2,y_2),...,(x_n,y_n)\}$$
 
 &emsp;&emsp;$P(X, Y)$ 是输入特征 $X$ 和类别标签 $Y$ 的联合概率分布，基于我们的**条件特征独立假设**，在给定类别标签 $Y = c_k$ 的条件下，输入特征的各个维度 $X^{(j)}$ 是条件独立的，即表示为：
 
-$$P(X=x | Y = c_k) = P(X^{(1)} = x^{(1)}, ..., X^{(n)} = x^{(n)} | Y = c_k) = \prod_{j=1}^n P(X^{(j)} = x^{(j)} | Y = c_k)$$
+$$P(X=x | Y = c_k) = P(X^{(1)} = x^{(1)}, ..., X^{(n)} = x^{(n)} | Y = c_k)$$
+$$= \prod_{j=1}^n P(X^{(j)} = x^{(j)} | Y = c_k)$$
 
 &emsp;&emsp;而朴素贝叶斯方法，则是通过学习输入x对于y的生成模式，根据计算的后验概率：
 
 $$P(Y = c_k | X = x) 
-= \frac {P(X = x | Y = c_k)P(Y=c_k)} {\sum_{k=1}^K P(X = x | Y = c_k)P(Y = c_k)}
-= \frac{P(Y=c_k) \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}{\sum_{k=1}^K P(Y=c_k) \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)},   k = 1,2,...,K$$
+= \frac {P(X = x | Y = c_k)P(Y=c_k)} {\sum_{k=1}^K P(X = x | Y = c_k)P(Y = c_k)}$$
+$$= \frac{P(Y=c_k) \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}{\sum_{k=1}^K P(Y=c_k) \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)},   k = 1,2,...,K$$
 
 &emsp;&emsp;找到${X=x}$时，后验概率最大的$y=c_k$。所以朴素贝叶斯分类器可以表示为：
 
-$$y = \mathop{\arg\max}\limits_{c_k} P(Y=c_k) \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$$
+$$ y = \arg\max_c P(Y=c_k)  \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$$
 
-### 垃圾邮件分类（多项式特征）
-&emsp;&emsp;垃圾邮箱分类是一个朴素贝叶斯的常见示例，基于朴素贝叶斯的垃圾邮件分类是根据不同词在垃圾邮箱中出现的频率学习，然后进行预测的一种方式。尽管朴素贝叶斯对于垃圾邮箱分类的方式比较直接，但是其仍然具有较好的分类效果。
+### 多项式特征（示例：垃圾邮件问题）
+&emsp;&emsp;垃圾邮件分类是一个朴素贝叶斯的常见示例，基于朴素贝叶斯的垃圾邮件分类是根据不同词在垃圾邮箱中出现的频率学习，然后进行预测的一种方式。尽管朴素贝叶斯对于垃圾邮箱分类的方式比较直接，但是其仍然具有较好的分类效果。
 
 &emsp;&emsp;在垃圾邮箱分类问题中，特征维度 $x_a = j$ 表示文本词典 $x$ 的第 $\alpha$ 个单词在词典中出现了 $j$ 次。其基本思想是，如果一个词语在垃圾邮件中出现了 $j$ 次，那么在一个该词语出现了 $j$ 次或者更多次的邮件更有可能是个垃圾邮件。
 
@@ -111,21 +114,23 @@ $$\theta_{\alpha c} = \frac{\sum_{i=1}^{n}I(y_i=c)x_{i\alpha} + l}{
 
 &emsp;&emsp;$m_i$代表着文本 $i$ 中单词的总数，而 $I(y_i=c)$ 则是判别函数，其含义为:
 
-$$I(y_i=c) = \begin{equation}
-    \begin{cases}
-    0, y_i = c,\\
-    1, y_i \not ={c}
-    \end{cases}
-\end{equation}$$
+$$I_{\{y_i = c\}} = \begin{cases}
 
+0, & y_i = c \\
+
+1, & y_i \neq c
+
+\end{cases}$$
+
+```
 &emsp;&emsp;$l$ 代表平滑参数，当 $l = 1$ 时我们称为拉普拉斯平滑。平滑参数可以有效防止因为某些内容没有在垃圾邮件文本中出现，导致 $P(x|m, y=c)$ 为 0 以使得无法准确判断的情况。
 
 &emsp;&emsp;回到 $P(x|m, y=c)$ 中，由于多项式左侧是常数项，所以我们只需要学习 $\prod_{\alpha=1}^d (\theta_{ac})^{x_a}$ 。又因为判别函数的特点，$I(y_i=c)x_{i\alpha}$ 和 $I(y_i=c)m_i$ 则可以完全通过计数计算。因此我们实际上的特征维度代表的含义为：
 
-$$\frac{单词 x 在类别c邮件中出现的总次数}{类别c邮件的单词总数}$$
+$$\frac{ \text{ total appearences of word x in class C} }{\text{word counts in all text of class C} }$$
 
 &emsp;&emsp;由此在训练得到了联合分布律之后，预测方法可以表示为：
-$$\mathop{\arg\max}\limits_{c} P(Y=c) \propto \mathop{\arg\max}\limits_{c} P(Y=c)\prod_{\alpha=1}^d\theta_{\alpha c} $$
+$$\arg\max_{c} P(Y=c) \propto \arg\max_{c} P(Y=c) \prod_{\alpha=1}^d \theta_{\alpha c} $$
 
 #### 代码示例
 &emsp;&emsp;训练的数据集采用的来自kaggle的[sms-spam-collection-dataset](https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset)，这是一个垃圾短信的训练集，其对于新接触python的同学来说非常友好。
@@ -138,12 +143,9 @@ import pandas as pd
 from collections import defaultdict
 
 df = pd.read_csv("./data/spam.csv", delimiter=',',encoding='latin-1')
-dataSet = df.values;
+dataSet = df.values
 y = dataSet[:, 0]
 X = dataSet[:, 1]
-
-# # 修复：将标签DataFrame转换为NumPy数组（一维）
-# y_values = y.values.ravel()  # 关键修复：转换为扁平数组
 
 # 正确划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(
@@ -240,5 +242,113 @@ correct_rate = classifier.evaluate(X_test, y_test)
 print("预测准确率为", correct_rate)
 ```
 
+### 连续性特征（用例：鸢尾花分类问题）
+
+&emsp;&emsp;当数据表现为连续特征时，常见的如自然状态下的各种可观测属性。通常使用高斯分布来进行表征。即：
+
+$$X_\alpha \in R$$
+
+$$P(x_\alpha | y = c) = N(\mu_{\alpha c}, \sigma^2_{\alpha c}) = \frac{1}{\sqrt{2 \pi} \sigma_{\alpha c} } e^{ -\frac{1}{2} (\frac{x_\alpha - \mu_{\alpha c} }{\sigma_{\alpha c} })^2 }$$
+
+&emsp;&emsp;即面对连续性特征时的，我们根据每种类型不同特征的正态分布来计算每一维度的条件概率 $P(x_\alpha | y = c)$。
+
+&emsp;&emsp;连续性特征的一个常用示例为鸢尾花问题，鸢尾花作为一种自然存在的物种，同品类每个个体之间的生物性状都符合某种状态分布。
+
+&emsp;&emsp;值得注意的是，在写实际代码时，需要防止出现计算出方差为0的情况。
+
+#### 代码示例
+
+```python
+import warnings
+warnings.filterwarnings('ignore')
+import numpy as np
+# 加载莺尾花数据集
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+
+class GaussianNaiveBayes:
+
+    def __init__(self):
+
+        # 标签分类
+        self.labels: list[any] = None
+
+        # 每个标签的前置概率
+        self.label_prop: list[int] = None
+
+        # 每个类别不同维度属性的均值
+        self.class_means: list[int, float] = None
+
+        # 每个类别不同属性的方差
+        self.class_vars: list[int, float] = None
+
+    def train(self, X, y):
+
+        self.labels = np.unique(y)
+        n_classes = len(self.labels)
+        n_features = X.shape[1]
+
+        # 初始化存储结构
+        self.label_prop = np.zeros(n_classes)
+        self.class_means = np.zeros((n_classes, n_features))
+        self.class_vars = np.zeros((n_classes, n_features))
+
+        for i, c in enumerate(self.labels):
+            X_c = X[y == c]
+            # 计算每一类的后验概率
+            self.label_prop[i] = X_c.shape[0] / X.shape[0]
+            # 计算同品种每一类特征的期望
+            self.class_means[i, :] = X_c.mean(axis=0)
+            # 计算同品种每一类特征的方差
+            self.class_vars[i, :] = X_c.var(axis=0, ddof=1)
+
+    def calculate_predict(self, x, mean, var):
+        """计算高斯概率密度"""
+        # 防止方差为0（添加小epsilon）
+        var = np.maximum(var, 1e-9)
+        exponent = -((x - mean) ** 2) / (2 * var)
+        return (1 / np.sqrt(2 * np.pi * var)) * np.exp(exponent)
+
+    def predict(self, X):
+        log_probs = []
+        for i, c in enumerate(self.labels):
+            prior = np.log(self.label_prop[i])
+            # 对每个特征独立计算条件概率
+            likelihood = 0
+            for j in range(len(X)):
+                likelihood += np.log(self.calculate_predict(
+                    X[j],
+                    self.class_means[i, j],
+                    self.class_vars[i, j]
+                ))
+            log_probs.append(prior + likelihood)
+
+        # 选择最大概率类别
+        return self.labels[np.argmax(np.array(log_probs), axis=0)]
+
+    def evaluate(self, X, y) -> float:
+        correct_cnt = 0
+        for X_c, label in zip(X, y):
+            predict_res = self.predict(X_c)
+            if predict_res == label:
+                correct_cnt += 1
+        return correct_cnt / len(y)
 
 
+X, y = datasets.load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+classifier = GaussianNaiveBayes()
+classifier.train(X_train, y_train)
+correct_rate = classifier.evaluate(X_test, y_test)
+
+print("预测准确率为", correct_rate)
+```
+
+## 参考
+
+[1]《统计学习方法》(李航)(清华大学出版社)
+
+[2] 《概率论与数理统计》 (同济大学数学系)（人民邮电出版社）
+
+[3][D老师](https://www.deepseek.com)
