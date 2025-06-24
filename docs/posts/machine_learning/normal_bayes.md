@@ -122,7 +122,7 @@ $$I_{\{y_i = c\}} = \begin{cases}
 
 \end{cases}$$
 
-```
+
 &emsp;&emsp;$l$ 代表平滑参数，当 $l = 1$ 时我们称为拉普拉斯平滑。平滑参数可以有效防止因为某些内容没有在垃圾邮件文本中出现，导致 $P(x|m, y=c)$ 为 0 以使得无法准确判断的情况。
 
 &emsp;&emsp;回到 $P(x|m, y=c)$ 中，由于多项式左侧是常数项，所以我们只需要学习 $\prod_{\alpha=1}^d (\theta_{ac})^{x_a}$ 。又因为判别函数的特点，$I(y_i=c)x_{i\alpha}$ 和 $I(y_i=c)m_i$ 则可以完全通过计数计算。因此我们实际上的特征维度代表的含义为：
@@ -345,10 +345,41 @@ correct_rate = classifier.evaluate(X_test, y_test)
 print("预测准确率为", correct_rate)
 ```
 
+### 朴素贝叶斯是线性分类器
+
+#### 多项式形式证明
+&emsp;&emsp;假设 $y_i \in \{-1, +1\}$，并且特征是多项式形式的。根据前文可以得到预测函数即为：
+$$h(x) = \arg\max_c P(Y=c_k)  \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$$
+
+&emsp;&emsp;欲证明其符合线性分类器特征即通过证明：
+$$w^Tx+b > 0 \Longleftrightarrow h(x) = +1$$
+
+**证**：
+
+&emsp;&emsp;定义 $P(x_{\alpha} | y = +1) \propto \theta_{\alpha_+}^{x_\alpha}$,定义$P(x_{\alpha} | y = -1) \propto \theta_{\alpha_-}^{x_\alpha}$, $P(Y = +1) = \pi_+$，$P(Y = -1) = \pi_-$
+
+&emsp;&emsp;令：
+$$[w]_\alpha = log(\theta_{\alpha+}) - log(\theta_{\alpha-})$$
+$$b = log(\pi_+) - log(\pi_-)$$
+
+&emsp;&emsp;则：
+
+$$w^T + b > 0 \Longleftrightarrow \sum_{\alpha = 1}^d[x]_{\alpha}[w]_{\alpha}+b > 0$$
+
+$$\Longleftrightarrow exp(\sum_{\alpha = 1}^d[x]_{\alpha}[w]_{\alpha}+b) > 1$$
+
+$$\Longleftrightarrow exp(\sum_{\alpha = 1}^d[x]_{\alpha}(log(\theta_{\alpha+}) - log(\theta_{\alpha-}))+log(\pi_+) - log(\pi_-)) > 1$$
+$$\Longleftrightarrow \frac{\pi_+}{\pi_-}\prod_{\alpha = 1}^d\frac{ \theta_{\alpha_+}^{[x]_\alpha} }{ \theta_{\alpha_-}^{[x]_\alpha} } > 1$$
+$$\Longleftrightarrow \frac{\pi_+}{\pi_-}\prod_{\alpha = 1}^d\frac{ P([x]_{\alpha}|Y=+1)}{ P([x]_{\alpha}|Y=-1) } > 1$$
+$$\Longleftrightarrow \frac{P(x|Y=+1)\pi_+}{P(x|Y= -1)\pi_-} > 1$$
+$$\Longleftrightarrow \arg\max_cP(Y=y|x) = +1$$
+
 ## 参考
 
 [1]《统计学习方法》(李航)(清华大学出版社)
 
-[2] 《概率论与数理统计》 (同济大学数学系)（人民邮电出版社）
+[2]《概率论与数理统计》 (同济大学数学系)（人民邮电出版社）
 
-[3][D老师](https://www.deepseek.com)
+[3]《机器学习讲义（何琨）》
+
+[4][D老师](https://www.deepseek.com)
